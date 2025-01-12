@@ -1,38 +1,38 @@
 import speech_recognition as sr
 
-def ecouter_micro():
+def listening():
     recognizer = sr.Recognizer()
 
     with sr.Microphone() as source:
-        print("Parlez maintenant...")
+        print("Listening")
         recognizer.adjust_for_ambient_noise(source, duration=1)
         audio = recognizer.listen(source, timeout=5)
 
     return audio
 
-def transcrire_audio(audio):
+def audio_transcription(audio):
     recognizer = sr.Recognizer()
 
     try:
-        print("Transcription en cours...")
-        texte = recognizer.recognize_google(audio, language="fr-FR")
-        print("Texte transcrit : {}".format(texte))
-        return texte
+        print("Transcription in progress...")
+        text = recognizer.recognize_google(audio, language="fr-FR")
+        print("Transcripted text: {}".format(text))
+        return text
     except sr.UnknownValueError:
-        print("Impossible de comprendre l'audio")
+        print("Impossible to understand voice")
         return None
     except sr.RequestError as e:
-        print("Erreur lors de la requête à l'API de reconnaissance vocale ; {0}".format(e))
+        print("API Error; {0}".format(e))
         return None
 
 if __name__ == "__main__":
-    audio = ecouter_micro()
+    audio = listening()
     if audio:
-        texte_transcrit = transcrire_audio(audio)
+        texte_transcrit = audio_transcription(audio)
         if texte_transcrit:
-            # Vous pouvez utiliser le texte_transcrit comme vous le souhaitez ici
+            # Use transcripted text here
             pass
         else:
-            print("La transcription a échoué.")
+            print("Transcription failed")
     else:
-        print("Aucun audio n'a été détecté.")
+        print("No audio detected")

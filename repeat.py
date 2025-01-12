@@ -1,13 +1,12 @@
 import entree
 import sortie
 
-audio = entree.ecouter_micro()
+audio = entree.listening()
 if audio:
-    texte_transcrit = entree.transcrire_audio(audio)
-    if texte_transcrit:
-        # Vous pouvez utiliser le texte_transcrit comme vous le souhaitez ici
-        sortie.prononcer_texte(texte_transcrit)
+    text = entree.audio_transcription(audio)
+    if text:
+        sortie.speak(text)
     else:
-        print("La transcription a échoué.")
+        print("Transcription failed")
 else:
-    print("Aucun audio n'a été détecté.")
+    print("No audio detected")
